@@ -6,17 +6,16 @@ const { MongoClient, ObjectId } = require('mongodb');
 require('dotenv').config();
 
 const app = express();
-//const PORT = 3000;
-//const MONGO_URI = "mongodb://localhost:27017";
 const DATABASE_NAME = "gameDB";
 const COLLECTION_NAME = "games";
 const PORT = process.env.PORT;
 const cors = require('cors');
 
+// Safety measures
+app.use(express.json());  
+app.use(cors());
 
-app.use(express.json());  // Middleware to parse JSON request bodies
-
-// Connect to MongoDB
+// Connecting to MongoDB database
 const connectDB = async () => {
     const client = new MongoClient(process.env.MONGODB_URI);
     await client.connect();
@@ -176,12 +175,14 @@ const fetchAndStoreGame = async () => {
     }
 };
 
+//--------FETCH API DATA (POST)---------------------------------------
 // API Route to manually trigger data fetching
 app.post('/fetch-store', async (req, res) => {
     const result = await fetchAndStoreGame();
     res.json(result);
 });
 
+//-------------------ADD(POST)------------------------------------------
 // Create a new game with specified attributes
 app.post('/games', async (req, res) => {
     const collection = await connectDB();
@@ -224,6 +225,7 @@ app.post('/games', async (req, res) => {
     }
 });
 
+//---------------------UPDATE (PUT)------------------------------------------
 // Update an existing game by ID
 app.put('/games/:id', async (req, res) => {
     const collection = await connectDB();
@@ -282,7 +284,10 @@ const updateGame = async (collection, gameId, newGameData) => {
         { $set: newGameData }
     );
 };
-// Get all games
+
+//--------------GET(GET)--------------------------------
+
+// Getting all games
 app.get('/games', async (req, res) => {
     const collection = await connectDB();
     try {
@@ -295,7 +300,7 @@ app.get('/games', async (req, res) => {
     }
 });
 
-// Get a game by ID
+// Getting a game by ID
 app.get('/games/:id', async (req, res) => {
     const collection = await connectDB();
     try {
@@ -311,7 +316,8 @@ app.get('/games/:id', async (req, res) => {
     }
 });
 
-// Delete all games
+//--------------------DELETE(DELETE)--------------------------------------
+// Deleting all games
 app.delete('/games', async (req, res) => {
     try {
         const collection = await connectDB();
@@ -323,7 +329,7 @@ app.delete('/games', async (req, res) => {
     }
 });
 
-// Delete a game by ID
+// Deleting a game by ID
 app.delete('/games/:id', async (req, res) => {
     const { id } = req.params;
 
