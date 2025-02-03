@@ -35,10 +35,10 @@ if (fs.existsSync(SSL_KEY_PATH) && fs.existsSync(SSL_CERT_PATH)) {
     };
 
     https.createServer(httpsOptions, app).listen(PORT, () => {
-        console.log(`🚀 HTTPS Server running on https://localhost:${PORT}`);
+        console.log(`HTTPS Server running on https://localhost:${PORT}`);
     });
 } else {
-    console.warn("⚠️ SSL certificates not found! Running server on HTTP.");
+    console.warn("SSL certificates not found! Running server on HTTP.");
     
     // Start HTTP Server as a fallback
     http.createServer(app).listen(PORT, () => {

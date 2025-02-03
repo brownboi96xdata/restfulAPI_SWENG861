@@ -1,0 +1,25 @@
+{
+    "name": "express-mongodb-app",
+    "version": "1.0.0",
+    "description": "An Express application with MongoDB integration",
+    "main": "app.js",
+    "scripts": {
+      "start": "node app.js",
+      "dev": "nodemon app.js"
+    },
+    "dependencies": {
+      "express": "^4.17.1",
+      "mongodb": "^4.1.0",
+      "dotenv": "^10.0.0",
+      "cors": "^2.8.5",
+      "axios": "^0.21.1",
+      "https": "1.0.0"
+    },
+    "devDependencies": {
+      "nodemon": "^2.0.12"
+    },
+    "engines": {
+      "node": ">=14.0.0"
+    },
+    "license": "ISC"
+  }
